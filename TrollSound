@@ -29,7 +29,7 @@
 				end
 			end)
 		end
-		game.ContentProvider:PreloadAsync({"rbxassetid://3406813517"})
+		game.ContentProvider:PreloadAsync({"rbxassetid://7799887925"})
 
 		function newSound(soundId, volume, pitch, loop, saveToVariable)    
 			local ID = `rbxassetid://{soundId}` 
