@@ -1,0 +1,116 @@
+	getgenv().begin = false
+		local event = game.ReplicatedStorage:FindFirstChild("DeleteCar", true) or  game.ReplicatedStorage:FindFirstChild("DeleteVehicle", true)
+		local sound = nil
+
+		function blockUntaggedSounds()
+		    for key, value in game:GetDescendants() do
+		        task.wait(0.5)
+		        if value:IsA("Sound") and not value.Name:match("ukrainianfemboysupremacy") then 
+		            print(value.Name .. " caught.")
+		            event:FireServer(value)
+		        end
+		    end    
+		   game.DescendantAdded:Connect(function(value)
+		        task.wait(0.5)
+		        if value:IsA("Sound") and not value.Name:match("ukrainianfemboysupremacy") then 
+		            print(value.Name .. " caught on added.")
+		            event:FireServer(value)
+		        end
+		    end)
+		end
+		if event then 
+			task.spawn(function()
+				for key, value in workspace:GetDescendants() do
+					if not value:IsA("BasePart") then continue end
+					if value:IsA("SpawnLocation") then continue end
+					if value.Material ~= Enum.Material.Concrete and value.Material ~= Enum.Material.Grass then continue end
+					if game:GetService("Players"):FindFirstChild(value.Name) and value:IsAncestorOf(game:GetService("Players")[value.Name].Character) then continue end
+					event:FireServer(value)
+				end
+			end)
+		end
+		game.ContentProvider:PreloadAsync({"rbxassetid://3406813517"})
+
+		function newSound(soundId, volume, pitch, loop, saveToVariable)    
+			local ID = `rbxassetid://{soundId}` 
+			local Name = `guid={game:GetService("HttpService"):GenerateGUID(false)}_noDeleteTag=ukrainianfemboysupremacy`
+			local Volume = volume or 1
+			local Pitch = pitch or 1
+
+			for i,v in game:GetService("Workspace"):GetDescendants() do
+				if v:IsA("RemoteEvent") and v.Name == "AC6_FE_Sounds" then
+					v:FireServer("newSound", Name, workspace, ID, Pitch, Volume, loop)
+					v:FireServer("playSound", Name)
+					pcall(function()
+		                 if saveToVariable then
+						sound = workspace:FindFirstChild(Name, true)
+						if not sound then return end
+						task.delay(sound.TimeLength, function()
+							if event then
+								event:FireServer(sound)
+							else
+								v:FireServer("removeSound", Name)
+							end
+						end)
+					end
+		        end)
+				end
+			end
+		end
+
+		local lyrics = {
+			[1] = {"Ще не вмерла України і слава, і воля,", 0},
+			[2] = {"Ще нам, браття молодії, усміхнеться доля.", 12},
+			[3] = {"Згинуть наші воріженьки, як роса на сонці.", 25},
+			[4] = {"Запануєм і ми, браття, у своїй сторонці.", 37},
+			[5] = {"Душу й тіло ми положим за нашу свободу,", 50},
+			[6] = {"І покажем, що ми, браття, козацького роду.", 63},
+			[7] = {"Душу й тіло ми положим за нашу свободу,", 74},
+			[8] = {"І покажем, що ми, браття, козацького роду.", 87}
+		}
+
+		local plr = game.Players.LocalPlayer
+		local tcs =  game:GetService("TextChatService")
+		local rs =  game:GetService("ReplicatedStorage")
+
+		function chat(msg)
+			if tcs.ChatVersion == Enum.ChatVersion.TextChatService then 
+				tcs.TextChannels.RBXGeneral:SendAsync(msg)
+			else
+				rs.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg, "All")
+			end
+		end
+
+		function singAlongLyrics()
+			local beginTick = tick()
+			for key, value in lyrics do
+				chat(value[1])
+				local nextIndex = key + 1
+				if nextIndex <= #lyrics then
+					local nextTimestamp = lyrics[nextIndex][2]
+					local elapsedTime = tick() - beginTick
+					local waitTime = nextTimestamp - elapsedTime
+					if waitTime > 0 then
+						task.wait(waitTime)
+					end
+				end
+			end
+		end
+
+		function main(singAlong)
+			if not getgenv().begin then getgenv().begin = true else return end 
+
+			newSound(7799887925, 5, 1, false)
+			
+			task.wait(11)
+			
+			if singAlong then task.spawn(singAlongLyrics) end
+			
+			newSound(1837478410, 5, 1, true, true)
+			task.wait(102)
+			getgenv().begin = false
+			main(singAlong)
+		end
+
+		task.spawn(blockUntaggedSounds)
+		main(false)
