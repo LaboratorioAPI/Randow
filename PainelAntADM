@@ -1,1 +1,100 @@
+local PossiveisSTAFF = Instance.new("ScreenGui")
+local Main = Instance.new("Frame")
+local TItulo = Instance.new("TextLabel")
+local UICorner = Instance.new("UICorner")
+local UICorner_2 = Instance.new("UICorner")
+local ScrollingFrame = Instance.new("ScrollingFrame")
+local UIListLayout = Instance.new("UIListLayout")
+local TextButton = Instance.new("TextButton")
+local UICorner_3 = Instance.new("UICorner")
+local TextButton2 = Instance.new("TextButton")
+local UICorner_4 = Instance.new("UICorner")
 
+--Properties:
+
+PossiveisSTAFF.Name = "PossiveisSTAFF"
+PossiveisSTAFF.Parent = game.CoreGui -- ATENCAO
+
+Main.Name = "Main"
+Main.Parent = PossiveisSTAFF
+Main.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
+Main.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Main.BorderSizePixel = 0
+Main.Position = UDim2.new(0.724253654, 0, 0.0215988699, 0)
+Main.Size = UDim2.new(0, 177, 0, 32)
+Main.Visible = false
+Main.ZIndex = 10
+Main.Active = true
+Main.Selectable = true
+Main.Draggable = true
+
+TItulo.Name = "TItulo"
+TItulo.Parent = Main
+TItulo.BackgroundColor3 = Color3.fromRGB(13, 13, 13)
+TItulo.BackgroundTransparency = 1.000
+TItulo.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TItulo.BorderSizePixel = 0
+TItulo.Position = UDim2.new(0.0360802263, 0, 0.249527931, 0)
+TItulo.Size = UDim2.new(0, 87, 0, 15)
+TItulo.ZIndex = 10
+TItulo.Font = Enum.Font.SourceSansBold
+TItulo.Text = "POSSIVEIS STAFF"
+TItulo.TextColor3 = Color3.fromRGB(255, 255, 255)
+TItulo.TextSize = 14.000
+TItulo.TextWrapped = true
+
+UICorner.CornerRadius = UDim.new(0, 4)
+UICorner.Parent = TItulo
+
+UICorner_2.Parent = Main
+
+ScrollingFrame.Parent = Main
+ScrollingFrame.Active = true
+ScrollingFrame.BackgroundColor3 = Color3.fromRGB(13, 13, 13)
+ScrollingFrame.BackgroundTransparency = 1.000
+ScrollingFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ScrollingFrame.BorderSizePixel = 0
+ScrollingFrame.Position = UDim2.new(0, 0, 1.21875024, 0)
+ScrollingFrame.Size = UDim2.new(0, 177, 0, 159)
+ScrollingFrame.ZIndex = 5
+ScrollingFrame.ScrollBarThickness = 2
+
+UIListLayout.Parent = ScrollingFrame
+UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+UIListLayout.Padding = UDim.new(0, 4)
+
+TextButton.Parent = ScrollingFrame
+TextButton.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
+TextButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.BorderSizePixel = 0
+TextButton.Position = UDim2.new(-0.0847457647, 0, 0, 0)
+TextButton.Size = UDim2.new(0, 172, 0, 20)
+TextButton.Visible = false
+TextButton.ZIndex = 20
+TextButton.Font = Enum.Font.SourceSans
+TextButton.Text = ""
+TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextButton.TextSize = 13.000
+TextButton.TextWrapped = true
+TextButton.TextXAlignment = Enum.TextXAlignment.Left
+
+UICorner_3.Parent = TextButton
+
+TextButton2.Name = "TextButton2"
+TextButton2.Parent = ScrollingFrame
+TextButton2.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
+TextButton2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextButton2.BorderSizePixel = 0
+TextButton2.Position = UDim2.new(-0.0847457647, 0, 0, 0)
+TextButton2.Size = UDim2.new(0, 172, 0, 20)
+TextButton2.Visible = false
+TextButton2.ZIndex = 20
+TextButton2.Font = Enum.Font.SourceSans
+TextButton2.Text = ""
+TextButton2.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextButton2.TextSize = 13.000
+TextButton2.TextWrapped = true
+TextButton2.TextXAlignment = Enum.TextXAlignment.Left
+
+UICorner_4.Parent = TextButton2
