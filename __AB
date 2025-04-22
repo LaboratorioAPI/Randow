@@ -1,4 +1,15 @@
 
+	getgenv().AIMBOT_ENABLED = true
+	getgenv().sensi = 0.15
+	getgenv().Distancia = 500
+	getgenv().Team = true
+	getgenv().Fov = true
+	getgenv().FovTamanho = 100
+	getgenv().ModoNPC = false
+	getgenv().CentralizarFov = true
+	getgenv().AntBanAimbot = true
+	getgenv().Corpo = "Head" -- Parte do corpo a mirar
+	
 
 	local Players = game:GetService("Players")
 	local LocalPlayer = Players.LocalPlayer
