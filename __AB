@@ -1,0 +1,88 @@
+  getgenv().AIMBOT_ENABLED = false
+	getgenv().sensi = 0.15
+	getgenv().Distancia = 500
+	getgenv().Team = false
+	getgenv().Fov = false
+	getgenv().FovTamanho = 100
+	getgenv().ModoNPC = false
+	getgenv().CentralizarFov = true
+	getgenv().AntBanAimbot = true
+	getgenv().Corpo = "Head" -- Parte do corpo a mirar
+
+	local Players = game:GetService("Players")
+	local LocalPlayer = Players.LocalPlayer
+	local Camera = workspace.CurrentCamera
+	local RunService = game:GetService("RunService")
+	local UIS = game:GetService("UserInputService")
+
+	local fovCircle = Drawing.new("Circle")
+	fovCircle.Transparency = 1
+	fovCircle.Thickness = 1
+	fovCircle.NumSides = 100
+	fovCircle.Color = Color3.fromRGB(255, 255, 255)
+	fovCircle.Filled = false
+
+	RunService.RenderStepped:Connect(function()
+		local pos = getgenv().CentralizarFov
+			and Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
+			or UIS:GetMouseLocation()
+		fovCircle.Position = pos
+		fovCircle.Radius = getgenv().FovTamanho
+		fovCircle.Visible = getgenv().Fov and getgenv().AIMBOT_ENABLED
+	end)
+
+	local function isTargetValid(plr)
+		if plr == LocalPlayer then return false end
+		if not plr.Character or not plr.Character:FindFirstChild(getgenv().Corpo) then return false end
+		local hum = plr.Character:FindFirstChildOfClass("Humanoid")
+		if hum and hum.Health <= 0 then return false end
+		if getgenv().Team and plr.Team == LocalPlayer.Team then return false end
+		if getgenv().ModoNPC and not plr:IsA("Player") then return true end
+		return true
+	end
+
+	local function getClosestTarget()
+		local closest, shortest = nil, math.huge
+		for _, plr in pairs(Players:GetPlayers()) do
+			if isTargetValid(plr) then
+				local part = plr.Character:FindFirstChild(getgenv().Corpo)
+				if part then
+					local screenPos, visible = Camera:WorldToViewportPoint(part.Position)
+					local dist3D = (Camera.CFrame.Position - part.Position).Magnitude
+					local center = getgenv().CentralizarFov
+						and Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
+						or UIS:GetMouseLocation()
+					local dist2D = (Vector2.new(screenPos.X, screenPos.Y) - center).Magnitude
+					if visible and dist2D <= getgenv().FovTamanho and dist3D <= getgenv().Distancia then
+						if dist2D < shortest then
+							closest = part
+							shortest = dist2D
+						end
+					end
+				end
+			end
+		end
+		return closest
+	end
+
+	RunService.RenderStepped:Connect(function()
+		if getgenv().AIMBOT_ENABLED and UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) then
+			local target = getClosestTarget()
+			if target then
+				local pos = Camera:WorldToViewportPoint(target.Position)
+				local refPos = getgenv().CentralizarFov
+					and Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
+					or UIS:GetMouseLocation()
+				local delta = (Vector2.new(pos.X, pos.Y) - refPos) * getgenv().sensi
+
+				if getgenv().AntBanAimbot then
+					delta = Vector2.new(
+						math.clamp(delta.X, -10, 10),
+						math.clamp(delta.Y, -10, 10)
+					)
+				end
+
+				mousemoverel(delta.X, delta.Y)
+			end
+		end
+	end)
